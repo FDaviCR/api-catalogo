@@ -1,9 +1,9 @@
+const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
 
-const JWTSecret = "YouShallNotPass";
+dotenv.config();
 
-
-function auth(req, res, next){
+function auth(request, response, next){
     const authToken = req.headers['authorization'];
 
     if(authToken != undefined){
@@ -11,10 +11,9 @@ function auth(req, res, next){
         var token = bearer[1];
         //console.log(token);
 
-        jwt.verify(token, JWTSecret,(err, data) => {
+        jwt.verify(token, process.env.JWT_KEY,(err, data) => {
             if(err){
-                res.status(401);
-                res.json({err:"Token inválido!"});
+                res.status(401).send({msg:"Token inválido!"});
             }else{
                 req.token = token;
                 req.loggedUser = {id: data.id, login: data.login};
@@ -22,7 +21,8 @@ function auth(req, res, next){
             }
         });
     }else{
-        res.status(401);
-        res.json({err:"Token inválido!"});
+        res.status(401).send({msg:"Token inválido!"});
     }
 }
+
+module.exports = auth;

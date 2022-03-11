@@ -4,19 +4,19 @@ const jwt = require('jsonwebtoken');
 dotenv.config();
 
 function auth(request, response, next){
-    const authToken = req.headers['authorization'];
+    const authToken = request.headers['authorization'];
 
     if(authToken != undefined){
         const bearer = authToken.split(' ');
         var token = bearer[1];
-        //console.log(token);
-
+        console.log(token);
+        
         jwt.verify(token, process.env.JWT_KEY,(err, data) => {
             if(err){
-                res.status(401).send({msg:"Token inválido!"});
+                response.status(401).send({msg:"Token inválido!"});
             }else{
-                req.token = token;
-                req.loggedUser = {id: data.id, login: data.login};
+                request.token = token;
+                request.loggedUser = {id: data.id, login: data.login};
                 next();
             }
         });

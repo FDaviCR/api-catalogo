@@ -9,7 +9,6 @@ function auth(request, response, next){
     if(authToken != undefined){
         const bearer = authToken.split(' ');
         var token = bearer[1];
-        console.log(token);
         
         jwt.verify(token, process.env.JWT_KEY,(err, data) => {
             if(err){
@@ -21,7 +20,7 @@ function auth(request, response, next){
             }
         });
     }else{
-        res.status(401).send({msg:"Token inválido!"});
+        response.status(401).send({msg:"Token inválido!"});
     }
 }
 

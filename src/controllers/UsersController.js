@@ -47,7 +47,7 @@ module.exports = {
             }
       
             if(exists.authorization === 'admin'){
-                const token = jwt.sign({id: exists.id}, process.env.JWT_KEY, {expiresIn: '5m'})
+                const token = jwt.sign({id: exists.id}, process.env.JWT_KEY, {expiresIn: '30m'})
                 return response.status(200).send({token, user: exists})
             }
         }

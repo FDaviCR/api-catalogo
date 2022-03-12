@@ -6,7 +6,7 @@ dotenv.config();
 module.exports = {
     async listAllModules( request, response ){
         try {
-            let modulos = await Module.findAll();
+            let modulos = await Module.findAll({order: ['name']});
             return response.status(200).send(modulos);
         } catch (error) {
             return response.status(400).send({msg: 'Aconteceu um erro, tente novamente.', error});

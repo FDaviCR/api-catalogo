@@ -5,17 +5,6 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 module.exports = {
-    async listAllClasses( request, response ){
-        try {
-            let aulas = await Class.findAll(
-                {order:['name']}
-            );
-            return response.status(200).send(aulas);
-        } catch (error) {
-            return response.status(400).send({msg: 'Aconteceu um erro, tente novamente.', error});
-        }
-    },
-
     async listClassesForModule( request, response ){
         const { idModule } = request.params;
         try {

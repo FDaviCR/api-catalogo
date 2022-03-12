@@ -17,7 +17,7 @@ router.delete('/modules/:id', ModulesController.deleteModule);
 
 router.post('/classes', ClassesController.createClass);
 router.get('/classes/:idModule', ClassesController.listClassesForModule);
-router.get('/classes', ClassesController.listAllClasses);
 router.put('/classes/:id', ClassesController.updateClass);
+router.delete('/classes/:id', ClassesController.deleteClass)
 
 module.exports = router;

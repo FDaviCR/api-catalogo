@@ -2,6 +2,8 @@ const Module = require("../models/Modules");
 const Class = require("../models/Classes");
 const dotenv = require('dotenv');
 
+const util = require('../utils/index');
+
 dotenv.config();
 
 module.exports = {
@@ -21,6 +23,8 @@ module.exports = {
     async createClass( request, response ){
         const { name, description, date, idModule } = request.body;
 
+        let newDate = await util.convertDate(date);
+
         try {
             const moduleExists = await Module.findOne({
                 where: {id: idModule}
@@ -38,20 +42,22 @@ module.exports = {
 
             if (!exists){
                 Class.create({
-                    name: name, description: description, date: date, idModule: idModule
+                    name: name, description: description, date: newDate, idModule: idModule
                 });
                 return response.status(200).send({msg: 'Aula cadastrada com sucesso.'});
             } else {
                 return response.status(401).send({msg: 'A aula já existe.'});
             }
         } catch (error) {
-            return response.status(400).send({msg: 'Aconteceu um erro, tente novamente.', error});
+            return response.status(400).send({msg: 'Aconteceu um erro, tente novamente.'});
         }
     },
 
     async updateClass( request, response){
         const { id } = request.params;
         const { name, description, date, idModule } = request.body;
+
+        let newDate = await util.convertDate(date);
 
         try {
             const exists = await Class.findOne({
@@ -60,7 +66,7 @@ module.exports = {
 
             if (!exists){
                 Class.update({
-                    name: name, description: description, date: date, idModule: idModule
+                    name: name, description: description, date: newDate, idModule: idModule
                 }, { where: {id: id} });
                 return response.status(200).send({msg: 'Aula atualizada com sucesso.'});
             } else {

@@ -19,7 +19,7 @@ module.exports = {
     },
 
     async createClass( request, response ){
-        const { name, description, date, time, idModule } = request.body;
+        const { name, description, date, idModule } = request.body;
 
         try {
             const moduleExists = await Module.findOne({
@@ -38,7 +38,7 @@ module.exports = {
 
             if (!exists){
                 Class.create({
-                    name: name, description: description, date: date, time: time, idModule: idModule
+                    name: name, description: description, date: date, idModule: idModule
                 });
                 return response.status(200).send({msg: 'Aula cadastrada com sucesso.'});
             } else {
@@ -51,7 +51,7 @@ module.exports = {
 
     async updateClass( request, response){
         const { id } = request.params;
-        const { name, description, date, time, idModule } = request.body;
+        const { name, description, date, idModule } = request.body;
 
         try {
             const exists = await Class.findOne({
@@ -60,7 +60,7 @@ module.exports = {
 
             if (!exists){
                 Class.update({
-                    name: name, description: description, date: date, time: time, idModule: idModule
+                    name: name, description: description, date: date, idModule: idModule
                 }, { where: {id: id} });
                 return response.status(200).send({msg: 'Aula atualizada com sucesso.'});
             } else {

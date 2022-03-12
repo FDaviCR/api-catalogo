@@ -12,12 +12,12 @@ router.post('/users/authorization', UsersController.authenticateUser);
 
 router.post('/modules', auth, ModulesController.createModule);
 router.get('/modules', ModulesController.listAllModules);
-router.put('/modules/:id', ModulesController.updateModule);
-router.delete('/modules/:id', ModulesController.deleteModule);
+router.put('/modules/:id', auth, ModulesController.updateModule);
+router.delete('/modules/:id', auth, ModulesController.deleteModule);
 
-router.post('/classes', ClassesController.createClass);
+router.post('/classes', auth, ClassesController.createClass);
 router.get('/classes/:idModule', ClassesController.listClassesForModule);
-router.put('/classes/:id', ClassesController.updateClass);
-router.delete('/classes/:id', ClassesController.deleteClass)
+router.put('/classes/:id', auth, ClassesController.updateClass);
+router.delete('/classes/:id', auth, ClassesController.deleteClass)
 
 module.exports = router;

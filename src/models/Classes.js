@@ -30,11 +30,7 @@ const Aula = connection.define('classes',{
     },
     date:{
         allowNull: false,
-        type: Sequelize.STRING,
-    },
-    time: {
-        allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.DATE,
     }
 },{
     timestamps: false
